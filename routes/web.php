@@ -5,6 +5,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     // $role = Role::find(2);
@@ -39,6 +40,11 @@ Route::middleware('has.role')->group(function () {
         Route::post('assign-permissions', [AssignController::class, 'store'])->name('assign.store');
         Route::get('assign-permissions/{role}/asyinc', [AssignController::class, 'edit'])->name('assign.edit');
         Route::put('assign-permissions/{role}/asyinc', [AssignController::class, 'update'])->name('assign.update');
+
+        Route::get('assign-roles/users', [UserController::class, 'create'])->name('assign.user.create');
+        Route::post('assign-roles/users', [UserController::class, 'store']);
+        Route::get('assign-roles/{user}/edit', [UserController::class, 'edit'])->name('assign.user.edit');
+        Route::put('assign-roles/{user}/edit', [UserController::class, 'update']);
     });
 });
 
