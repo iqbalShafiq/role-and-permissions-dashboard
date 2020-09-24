@@ -19,6 +19,7 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">URL</th>
                                 <th scope="col">Permissions Name</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,6 +29,9 @@
                                 <td>{{ $navigation->name }}</td>
                                 <td>{{ $navigation->url }}</td>
                                 <td>{{ $navigation->permission_name }}</td>
+                                <td>
+                                    <a href="{{ route('navigation.edit', $navigation->id) }}">Edit</a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

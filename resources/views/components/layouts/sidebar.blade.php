@@ -1,45 +1,16 @@
 <div>
-    @can('create post')
+    @foreach ($navigations as $navigation)
+    @can($navigation->permission_name)
     <div class="mb-4">
-        <div class="text-muted mb-1 text-uppercase">Post</div>
+        <div class="text-muted mb-1 text-uppercase">{{ $navigation->name }}</div>
         <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action">Create New Post</a>
-            <a href="#" class="list-group-item list-group-item-action">Data Table Posts</a>
+            @foreach ($navigation->children as $child)
+            <a href="{{ url($child->url) }}" class="list-group-item list-group-item-action">{{ $child->name }}</a>
+            @endforeach
         </div>
     </div>
     @endcan
-
-    @can('create category')
-    <div class="mb-4">
-        <div class="text-muted mb-1 text-uppercase">Category</div>
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action">Create a Category</a>
-            <a href="#" class="list-group-item list-group-item-action">Data Table Category</a>
-        </div>
-    </div>
-    @endcan
-
-    @can('create user')
-    <div class="mb-4">
-        <div class="text-muted mb-1 text-uppercase">User</div>
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action">Create User</a>
-            <a href="#" class="list-group-item list-group-item-action">Data Table User</a>
-        </div>
-    </div>
-    @endcan
-
-    @can('setting permission')
-    <div class="mb-4">
-        <div class="text-muted mb-1 text-uppercase">Roles and Permission</div>
-        <div class="list-group">
-            <a href="{{ route('role.index') }}" class="list-group-item list-group-item-action">Roles</a>
-            <a href="{{ route('permission.index') }}" class="list-group-item list-group-item-action">Permission</a>
-            <a href="{{ route('assign.create') }}" class="list-group-item list-group-item-action">Assign Permission</a>
-            <a href="{{ route('assign.user.create') }}" class="list-group-item list-group-item-action">Assign Roles</a>
-        </div>
-    </div>
-    @endcan
+    @endforeach
 
     @can('create navigation')
     <div class="mb-4">

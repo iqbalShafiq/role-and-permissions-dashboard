@@ -19,10 +19,14 @@ class HasAnyRole
     {
         $roles = Role::get();
 
-        if ($request->user()->hasAnyRole($roles)) {
-            return $next($request);
+        if (auth()->check()) {
+            if ($request->user()->hasAnyRole($roles)) {
+                return $next($request);
+            } else {
+                abort(403);
+            }
         } else {
-            abort(403);
+            abort(404);
         }
     }
 }

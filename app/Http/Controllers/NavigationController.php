@@ -39,4 +39,41 @@ class NavigationController extends Controller
 
         return back();
     }
+
+    public function edit(Navigation $navigation)
+    {
+        $parents = Navigation::where('url', null)->get();
+        $permissions = Permission::get();
+
+        return view('permissions.navigation.edit', compact('parents', 'navigation', 'permissions'));
+    }
+
+    public function update(Request $request, Navigation $navigation)
+    {
+        $request->validate([
+            'name' => 'required',
+            'permission' => 'required'
+        ]);
+
+        $navigation->update([
+            'name' => $request->name,
+            'url' => $request->url,
+            'permission_name' => $request->permission,
+            'parent_id' => $request->parent
+        ]);
+
+        return back();
+    }
+
+    public function delete(Navigation $navigation)
+    {
+        return view('permissions.navigation.delete', compact('navigation'));
+    }
+
+    public function destroy(Navigation $navigation)
+    {
+        $navigation->delete();
+
+        return redirect()->route('navigation.table');
+    }
 }

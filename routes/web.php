@@ -18,7 +18,18 @@ Auth::routes();
 
 Route::middleware('has.role')->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
-    Route::prefix('role-and-permission')->group(function () {
+
+    Route::middleware('permission:create post')->group(function () {
+        Route::view('posts/create', 'permissions.posts.create');
+        Route::view('posts/table', 'permissions.posts.table');
+    });
+
+    Route::middleware('permission:create category')->group(function () {
+        Route::view('category/create', 'permissions.category.create');
+        Route::view('category/table', 'permissions.category.table');
+    });
+
+    Route::prefix('role-and-permission')->middleware('permission:assign role and permission')->group(function () {
         Route::prefix('roles')->group(function () {
             Route::get('/', [RoleController::class, 'index'])->name('role.index');
             Route::post('create', [RoleController::class, 'store'])->name('role.store');
@@ -51,6 +62,10 @@ Route::middleware('has.role')->group(function () {
         Route::get('create', [NavigationController::class, 'create'])->name('navigation.create');
         Route::post('create', [NavigationController::class, 'store']);
         Route::get('table', [NavigationController::class, 'index'])->name('navigation.table');
+        Route::get('edit/{navigation}', [NavigationController::class, 'edit'])->name('navigation.edit');
+        Route::put('edit/{navigation}', [NavigationController::class, 'update']);
+        Route::get('delete/{navigation}', [NavigationController::class, 'delete'])->name('navigation.destroy');
+        Route::delete('delete/{navigation}', [NavigationController::class, 'destroy']);
     });
 });
 
