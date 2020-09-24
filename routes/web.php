@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AssignController;
+use App\Http\Controllers\NavigationController;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
@@ -45,6 +46,11 @@ Route::middleware('has.role')->group(function () {
         Route::post('assign-roles/users', [UserController::class, 'store']);
         Route::get('assign-roles/{user}/edit', [UserController::class, 'edit'])->name('assign.user.edit');
         Route::put('assign-roles/{user}/edit', [UserController::class, 'update']);
+    });
+    Route::prefix('navigations')->middleware('permission: create navigation')->group(function () {
+        Route::get('create', [NavigationController::class, 'create'])->name('navigation.create');
+        Route::post('create', [NavigationController::class, 'store']);
+        Route::get('table', [NavigationController::class, 'index'])->name('navigation.table');
     });
 });
 

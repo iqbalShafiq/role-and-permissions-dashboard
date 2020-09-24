@@ -41,6 +41,18 @@
     </div>
     @endcan
 
+    @can('create navigation')
+    <div class="mb-4">
+        <div class="text-muted mb-1 text-uppercase">Navigations Setup</div>
+        <div class="list-group">
+            <a href="{{ route('navigation.create') }}" class="list-group-item list-group-item-action">Create
+                Navigation</a>
+            <a href="{{ route('navigation.table') }}" class="list-group-item list-group-item-action">Navigations
+                Table</a>
+        </div>
+    </div>
+    @endcan
+
     @auth
     <div class="mb-4">
         <div class="text-muted mb-1 text-uppercase">Logout</div>
